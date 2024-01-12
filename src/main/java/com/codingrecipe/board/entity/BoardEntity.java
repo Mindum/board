@@ -1,5 +1,6 @@
 package com.codingrecipe.board.entity;
 
+import com.codingrecipe.board.dto.BoardDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "board_table")
 //db의 테이블 역할을 하는 클래스
-public class BoardEntity {
+public class BoardEntity extends BaseEntity{
     @Id // pk 컬럼 필수 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,5 +30,17 @@ public class BoardEntity {
 
     @Column
     private int boardHits;
+
+    public static BoardEntity toSaveEntity(BoardDTO boardDTO){
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardPass(boardDTO.getBoardPass());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardTitle(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(0);
+        return boardEntity;
+
+
+    }
 
 }
