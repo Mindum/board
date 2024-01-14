@@ -19,4 +19,5 @@ public class BoardService {
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
         boardRepository.save(boardEntity);
     }
+
 }
