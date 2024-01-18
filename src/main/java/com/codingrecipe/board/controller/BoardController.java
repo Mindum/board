@@ -81,5 +81,19 @@ public class BoardController {
     public String paging(@PageableDefault(page = 1)Pageable pageable, Model model){
         //pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+
+
+        // 페이지 갯수 20개 = 게시물이 약 60개정도 되는
+        // 예를들어 현재 사용자가 3페이지를 본다고하면 어떤 웹사이트는 1 2 3 4 5 3페이지만 굵은 글씨
+        // 보여지는 페이지 갯수를 3개씩만 보여주는 페이징 처리 1 2 3 <- 나 7 8 9 <- 요렇게
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "paging";
+
     }
 }
