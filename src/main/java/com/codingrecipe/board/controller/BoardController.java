@@ -95,5 +95,7 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         return "paging";
 
+
+
     }
 }
